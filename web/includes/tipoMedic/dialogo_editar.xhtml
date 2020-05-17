@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dialog header="Tipo Medic - Editar" widgetVar="dialogo-editar" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-editar">
+            <h:panelGrid  columns="2" columnClasses="label,value">
+                
+                <p:outputLabel value="Nome: " for="nome"/>
+                <p:inputText value="#{MBTipoMedic.tm.nome}" id="nome" required="true" maxlength="45">
+                    <f:validateLength maximum="45" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+            </h:panelGrid>
+            
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Editar" icon="fa fa-edit" actionListener="#{MBTipoMedic.novoEditar(true)}" update=":form-editar :growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-editar');" />
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

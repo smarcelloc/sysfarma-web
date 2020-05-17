@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form id="form-tabela">
+        <p:dataTable var="item" value="#{MBVenda.itens}" filteredValue="#{MBVenda.itensFiltro}" sortBy="#{item.id}" sortOrder="descending" resizableColumns="true" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorTemplate="{FirstPageLink}  {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+            <f:facet name="header">
+                <h:outputText value="Vendas " />
+
+                <p:commandButton title="Novo" icon="fa fa-plus" oncomplete="PF('dialogo-novo').show();" actionListener="#{MBVenda.prepararNovo()}" update=":form-novo">
+                    <p:resetInput target=":form-novo" />
+                </p:commandButton>
+
+                <p:commandButton title="Atualizar" icon="fa fa-repeat" actionListener="#{MBVenda.init()}" update=":form-tabela" />
+            </f:facet>
+
+
+            <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}" width="60">
+                <h:outputText value="#{item.id}" />
+            </p:column>
+
+            <p:column headerText="Cliente" width="250">
+                <h:outputText value="#{item.cliente.nome}" styleClass="wrap-normal"/>
+            </p:column>
+
+            <p:column headerText="CPF" width="100">
+                <h:outputText value="#{item.cliente.cpf}" converter="cpf" />
+            </p:column>
+
+            <p:column headerText="Total" width="100">
+                <h:outputText value="#{item.total}">
+                    <f:convertNumber type="currency" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Pagamento" width="100">
+                <h:outputText value="#{item.pgto}" />
+            </p:column>
+
+            <p:column headerText="Vendida" sortBy="#{item.dt_vendida}" width="100">
+                <h:outputText value="#{item.dt_vendida}" converter="dateConverter" />
+            </p:column>
+
+            <p:column headerText="Opção" width="80">
+                <p:commandButton icon="fa fa-edit" title="Editar" oncomplete="PF('dialogo-editar').show();" update=":form-editar :growl" actionListener="#{MBVenda.prepararEditar()}">
+                    <f:setPropertyActionListener target="#{MBVenda.v}" value="#{item}" />
+                    <p:resetInput target=":form-editar" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-trash-o" title="Excluir" oncomplete="PF('dialogo-excluir').show();" update=":form-excluir">
+                    <f:setPropertyActionListener target="#{MBVenda.v}" value="#{item}" />
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+
+</ui:composition>
+

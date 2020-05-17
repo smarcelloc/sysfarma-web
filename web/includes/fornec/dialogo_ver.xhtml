@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <p:dialog header="Fornecedor - Ver Mais" widgetVar="dialogo-ver" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-ver">
+            <p:panelGrid  columns="2" columnClasses="label,value">
+
+                <h:outputText value="CEP:" />
+                <h:outputLink value="https://www.google.com/maps/search/#{MBFornec.foe.endereco.cep} - #{MBFornec.foe.endereco.logradouro}, #{MBFornec.foe.endereco.numero}" target="_blank" title="Abrir o Google Maps">
+                    <h:outputText value="#{MBFornec.foe.endereco.cep}" converter="cep" />
+                </h:outputLink>
+
+                <h:outputText value="Logradouro:" />
+                <h:outputText value="#{MBFornec.foe.endereco.logradouro}, #{MBFornec.foe.endereco.numero}" />
+
+                <h:outputText value="Complemento: " />
+                <h:outputText value="#{MBFornec.foe.endereco.compl}"/>
+
+                <h:outputText value="Cidade: " />
+                <h:outputText value="#{MBFornec.foe.endereco.cidade.nome}" />
+
+                <h:outputText value="Estado: " />
+                <h:outputText value="#{MBFornec.foe.endereco.cidade.uf}" />
+
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

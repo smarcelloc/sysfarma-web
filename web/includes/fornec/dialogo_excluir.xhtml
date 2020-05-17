@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <p:dialog header="Fornecedor - Excluir" widgetVar="dialogo-excluir" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-excluir">
+            <p:panelGrid  columns="2" columnClasses="label,value">
+
+                <h:outputText value="ID: " />
+                <h:outputText value="#{MBFornec.foe.fornec.id}" />
+                
+                <h:outputText value="CPF: " />
+                <h:outputText value="#{MBFornec.foe.fornec.cnpj}" converter="cnpj"/>
+                
+                <h:outputText value="Nome: " />
+                <h:outputText value="#{MBFornec.foe.fornec.nome}"  styleClass="truncate" />
+
+                <h:outputText value="Telefone " />
+                <h:outputText value="#{MBFornec.foe.fornec.tel}" converter="telefone"/>
+
+                <h:outputText value="Ramal: " />
+                <h:outputText value="#{MBFornec.foe.fornec.ramal}" />
+                                    
+            </p:panelGrid>
+            
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Excluir" icon="fa fa-trash" actionListener="#{MBFornec.excluir()}" update=":growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-excluir');" />
+            </h:panelGrid>
+            
+        </h:form>
+    </p:dialog>
+
+
+</ui:composition>
+

@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dialog header="Medicamento - Novo" widgetVar="dialogo-novo" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-novo">
+
+            <h:panelGrid  columns="2" columnClasses="label,value">
+
+                <p:outputLabel value="Nome: " for="nome"/>
+                <p:inputText value="#{MBMedic.m.nome}" id="nome" required="true" maxlength="100">
+                    <f:validateLength maximum="100" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Preço R$: " for="preco"/>
+                <p:inputNumber value="#{MBMedic.m.preco}" id="preco" required="true" maxValue="999999">
+                    <f:validateDoubleRange minimum="0.01" maximum="999999.00"/>
+                </p:inputNumber>
+
+                <p:outputLabel value="Estoque:  " for="estoque"/>
+                <p:inputText id="estoque" value="#{MBMedic.m.estoque}" maxlength="5" required="true" >
+                    <f:convertNumber integerOnly="true"/>
+                    <f:validateLongRange minimum="1" maximum="32000" />
+                </p:inputText>
+
+                <p:outputLabel value="Vencimento:  " for="dtvenc"/>
+                <p:inputMask mask="99/99/9999" value="#{MBMedic.m.dt_validade}" id="dtvenc" required="true" converter="dateConverter" validator="br.com.sysfarma.validator.Data2Validator" />
+
+                <p:outputLabel value="Controlado: " for="controlado" />
+                <p:selectBooleanButton value="#{MBMedic.m.controlado}" onLabel="Sim" onIcon="fa fa-fw fa-unlock" offLabel="Não" offIcon="fa fa-fw fa-lock" id="controlado" />
+
+                <p:outputLabel value="Tipo: " for="tmedic" />
+                <p:selectOneMenu filter="true" id="tmedic" value="#{MBMedic.m.tipoMedic.id}" style="width: 150px;" effect="fade" required="true">
+                     <f:selectItem itemLabel="Seleciona ..." itemValue="" />
+                     <f:selectItems value="#{MBMedic.comboTM}" var="itemtm" itemLabel="#{itemtm.nome}" itemValue="#{itemtm.id}" />
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Fornecedor " for="select-fo" />
+                <p:selectOneMenu widgetVar="seleciona-fo" filter="true" id="select-fo" value="#{MBMedic.m.fornec.id}" style="width: 150px;" effect="fade" required="true">
+                    <f:selectItem itemValue="" itemLabel="Selecione ..." />
+                    <f:selectItems value="#{MBMedic.comboFOE}" var="itemfoe" itemLabel="#{itemfoe.fornec.nome}" itemValue="#{itemfoe.fornec.id}" />
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Gravar" icon="fa fa-save" actionListener="#{MBMedic.novoEditar(false)}" update=":form-novo :growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-novo');" />
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>

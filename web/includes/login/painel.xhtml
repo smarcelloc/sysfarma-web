@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    
+    <h:form id="form-login">
+        
+        <h:panelGrid columns="2" cellpadding="5">
+            <f:facet name="header">
+                <h:outputText value="Login" />
+            </f:facet>
+            
+            <h:outputLabel for="email" value="E-mail: " />
+            <p:inputText id="email" value="#{MBLogin.email}" label="email" required="true" validator="br.com.sysfarma.validator.EmailValidator" />
+
+            <h:outputLabel for="senha" value="Senha: " />
+            <p:password id="senha" value="#{MBLogin.senha}" label="senha" required="true" />
+
+            <f:facet name="footer">
+                <p:commandButton value="Login" update=":growl" action="#{MBLogin.entrar()}" />
+            </f:facet>  
+        </h:panelGrid>
+
+
+    </h:form>
+
+
+</ui:composition>
+

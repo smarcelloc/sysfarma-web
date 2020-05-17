@@ -1,0 +1,62 @@
+body{
+    background-color: #cccccc;
+}
+
+.ui-widget, .ui-widget .ui-widget{
+    font-size: 1rem;
+}
+
+
+#footer{
+    font-size: .8rem;
+    text-align: center;
+    padding: .4rem;
+}
+
+.ui-dialog-title{
+    font-size: 1.3rem !important;
+}
+
+.ui-icon.ui-icon-search{
+    display:none;
+}
+
+.ui-paginator.ui-paginator-top.ui-widget-header{
+    display: none;
+}
+
+.truncate {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    display: block;
+}
+
+.wrap-normal{
+    word-wrap: break-word !important;
+    white-space: normal;
+}
+
+.fa{
+    font-size: 1rem !important;
+}
+
+
+#painel-login{
+    background-color: #fff !important;
+    margin: auto;
+    padding: 0.5rem;
+    max-width: 280px;
+    margin-top: 9rem;
+    box-shadow: .3rem 0 .5rem #a0a0a0;
+    border-radius: .5rem;
+}
+
+#body-login{
+    background-image: url("#{resource['img/background.jpg']}");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

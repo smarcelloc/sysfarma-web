@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form id="form-tabela">
+        <p:dataTable var="item" value="#{MBFornec.itens}" filteredValue="#{MBFornec.itensFiltro}" sortBy="#{item.fornec.id}" sortOrder="descending" resizableColumns="true" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorTemplate="{FirstPageLink}  {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+            <f:facet name="header">
+                <h:outputText value="Fornecedores " />
+
+                <p:commandButton title="Novo" icon="fa fa-plus" oncomplete="PF('dialogo-novo').show();" actionListener="#{MBFornec.prepararNovo()}" update=":form-novo">
+                    <p:resetInput target=":form-novo" />
+                </p:commandButton>
+
+                <p:commandButton title="Atualizar" icon="fa fa-repeat" actionListener="#{MBFornec.init()}" update=":form-tabela" />
+            </f:facet>
+
+            <p:column headerText="ID" sortBy="#{item.fornec.id}" filterBy="#{item.fornec.id}" width="60">
+                <h:outputText value="#{item.fornec.id}" />
+            </p:column>
+
+            <p:column headerText="Nome" sortBy="#{item.fornec.nome}" filterBy="#{item.fornec.nome}" width="200">
+                <h:outputText value="#{item.fornec.nome}" styleClass="wrap-normal" />
+            </p:column>
+            
+            <p:column headerText="CNPJ" filterBy="#{item.fornec.cnpj}" width="150">
+                <h:outputText value="#{item.fornec.cnpj}" converter="cnpj" />
+            </p:column>
+
+            <p:column headerText="Telefone" filterBy="#{item.fornec.tel}" width="130">
+                <h:outputLink value="tel:#{item.fornec.tel}" title="Abrir app. Contato">
+                    <h:outputText value="#{item.fornec.tel}" converter="telefone" />
+                </h:outputLink>
+            </p:column>
+
+            <p:column headerText="Ramal" width="80">
+                <h:outputText value="#{item.fornec.ramal}" />
+            </p:column> 
+            
+            <p:column headerText="Opção" width="80">
+                <p:commandButton icon="fa fa-eye" title="Ver" oncomplete="PF('dialogo-ver').show();" update=":form-ver">
+                    <f:setPropertyActionListener target="#{MBFornec.foe}" value="#{item}" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-edit" title="Editar" oncomplete="PF('dialogo-editar').show();" update=":form-editar">
+                    <f:setPropertyActionListener target="#{MBFornec.foe}" value="#{item}" />
+                    <p:resetInput target=":form-editar" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-trash-o" title="Excluir" oncomplete="PF('dialogo-excluir').show();" update=":form-excluir">
+                    <f:setPropertyActionListener target="#{MBFornec.foe}" value="#{item}" />
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+
+</ui:composition>
+

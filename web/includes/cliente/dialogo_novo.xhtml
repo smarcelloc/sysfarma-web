@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dialog header="Cliente - Novo" widgetVar="dialogo-novo" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-novo">
+
+            <h:panelGrid  columns="2" columnClasses="label,value">
+
+                <p:outputLabel value="Nome: " for="nome"/>
+                <p:inputText value="#{MBCliente.ce.cliente.nome}" id="nome" required="true" maxlength="80">
+                    <f:validateLength maximum="80" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Telefone: " for="tel"/>
+                <p:inputMask mask="(99) 9999-9999?9" value="#{MBCliente.ce.cliente.tel}" id="tel" required="true" converter="telefone" />
+
+                <p:outputLabel value="CPF: " for="cpf"/>
+                <p:inputMask mask="999.999.999-99" value="#{MBCliente.ce.cliente.cpf}" id="cpf" required="true">
+                    <f:validator validatorId="br.com.sysfarma.validator.CPFValidator" />
+                    <f:converter converterId="cpf" />
+                </p:inputMask>
+
+                <p:outputLabel value="Nascimento:  " for="dtnasc"/>
+                <p:inputMask mask="99/99/9999" value="#{MBCliente.ce.cliente.dt_nasc}" id="dtnasc" required="true" converter="dateConverter" validator="br.com.sysfarma.validator.DataValidator" />
+
+                <p:outputLabel value="CEP: " for="cep"/>
+                <p:inputMask mask="99999-999" value="#{MBCliente.ce.endereco.cep}" id="cep" required="true" onblur="cepBuscaAutomaticoNovo();" styleClass="cep-novo" converter="cep" />
+
+                <p:outputLabel value="Logradouro:  " for="logradouro"/>
+                <p:inputText value="#{MBCliente.ce.endereco.logradouro}" id="logradouro" required="true" maxlength="80" styleClass="logradouro-novo">
+                    <f:validateLength maximum="80" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Número:  " for="numero"/>
+                <p:inputText id="numero" value="#{MBCliente.ce.endereco.numero}" maxlength="9" required="true">
+                    <f:convertNumber integerOnly="true"/>
+                    <f:validateLength maximum="9" />
+                </p:inputText>
+
+                <p:outputLabel value="Complemento: " for="compl" />
+                <p:inputText id="compl" value="#{MBCliente.ce.endereco.compl}">
+                    <f:validateLength maximum="45" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Cidade:  " for="cidade" />
+                <p:inputText value="#{MBCliente.ce.endereco.cidade.nome}" id="cidade" required="true" maxlength="45" styleClass="cidade-novo">
+                    <f:validateLength maximum="45" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Estado: " for="estado" />
+                <p:selectOneMenu widgetVar="seleciona-estado-novo" filter="true" id="estado" value="#{MBCliente.ce.endereco.cidade.uf}" style="width: 150px;" styleClass="uf-novo" effect="fade"  converter="estado">
+                    <f:selectItem itemLabel="São Paulo" itemValue="SP" />
+                    <f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+                    <f:selectItem itemLabel="Acre" itemValue="AC" />
+                    <f:selectItem itemLabel="Alagoas" itemValue="AL" />
+                    <f:selectItem itemLabel="Amapá" itemValue="AP" />
+                    <f:selectItem itemLabel="Amazonas" itemValue="AM" />
+                    <f:selectItem itemLabel="Bahia" itemValue="BA" />
+                    <f:selectItem itemLabel="Ceará" itemValue="CE" />
+                    <f:selectItem itemLabel="Distrito Federal" itemValue="DF" />
+                    <f:selectItem itemLabel="Espírito Santo" itemValue="ES" />
+                    <f:selectItem itemLabel="Goiás" itemValue="GO" />
+                    <f:selectItem itemLabel="Maranhão" itemValue="MA" />
+                    <f:selectItem itemLabel="Mato Grosso" itemValue="MT" />
+                    <f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS" />
+                    <f:selectItem itemLabel="Minas Gerais" itemValue="MG" />
+                    <f:selectItem itemLabel="Pará" itemValue="PA" />
+                    <f:selectItem itemLabel="Paraíba" itemValue="PB" />
+                    <f:selectItem itemLabel="Paraná" itemValue="PR" />
+                    <f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+                    <f:selectItem itemLabel="Piauí" itemValue="PI" />
+                    <f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+                    <f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS" />
+                    <f:selectItem itemLabel="Rondônia" itemValue="RO" />
+                    <f:selectItem itemLabel="Roraima" itemValue="RR" />
+                    <f:selectItem itemLabel="Santa Catarina" itemValue="SC" />
+                    <f:selectItem itemLabel="Sergipe" itemValue="SE" />
+                    <f:selectItem itemLabel="Tocantins" itemValue="TO" />
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Gravar" icon="fa fa-save" actionListener="#{MBCliente.novoEditar(false)}" update=":form-novo :growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-novo');" />
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>

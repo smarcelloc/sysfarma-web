@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form id="form-tabela">
+        <p:dataTable var="item" value="#{MBMedic.itens}" filteredValue="#{MBMedic.itensFiltro}" sortBy="#{item.id}" sortOrder="descending" resizableColumns="true" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorTemplate="{FirstPageLink}  {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+            <f:facet name="header">
+                <h:outputText value="Medicamentos " />
+                
+                <p:commandButton title="Novo" icon="fa fa-plus" oncomplete="PF('dialogo-novo').show();" actionListener="#{MBMedic.prepararNovo()}" update=":form-novo">
+                    <p:resetInput target=":form-novo" />
+                </p:commandButton>
+
+                <p:commandButton title="Atualizar" icon="fa fa-repeat" actionListener="#{MBMedic.init()}" update=":form-tabela" />
+            </f:facet>
+            
+            
+            <p:column headerText="Opção" width="80">
+                <p:commandButton icon="fa fa-edit" title="Editar" oncomplete="PF('dialogo-editar').show();" update=":form-editar :growl" actionListener="#{MBMedic.prepararEditar()}">
+                    <f:setPropertyActionListener target="#{MBMedic.m}" value="#{item}" />
+                    <p:resetInput target=":form-editar" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-trash-o" title="Excluir" oncomplete="PF('dialogo-excluir').show();" update=":form-excluir">
+                    <f:setPropertyActionListener target="#{MBMedic.m}" value="#{item}" />
+                </p:commandButton>
+            </p:column>
+            
+            
+            <p:column headerText="ID" sortBy="#{item.id}" filterBy="#{item.id}" width="60">
+                <h:outputText value="#{item.id}" />
+            </p:column>
+            
+            <p:column headerText="Nome" sortBy="#{item.nome}" filterBy="#{item.nome}" width="300">
+                <h:outputText value="#{item.nome}" title="#{item.nome}" styleClass="wrap-normal"/>
+            </p:column>
+            
+            <p:column headerText="Preco" width="120">
+                <h:outputText value="#{item.preco}">
+                    <f:convertNumber type="currency"  />
+                </h:outputText>
+            </p:column>
+            
+            <p:column headerText="Estoque" width="100">
+                <h:outputText value="#{item.estoque}" />
+            </p:column>
+            
+            <p:column headerText="Vencimento" sortBy="#{item.dt_validade}" width="100">
+                <h:outputText value="#{item.dt_validade}" converter="dateConverter" />
+            </p:column>
+            
+            <p:column headerText="Controlado" sortBy="#{item.controlado}" width="100">
+                <h:outputText value="#{item.controlado}" converter="boolean" />
+            </p:column>
+            
+            <p:column headerText="Tipo Medicamento" filterBy="#{item.tipoMedic.nome}" width="160">
+                <h:outputText value="#{item.tipoMedic.nome}" />
+            </p:column>
+            
+            <p:column headerText="Fornecedor" filterBy="#{item.fornec.nome}" width="160">
+                <h:outputText value="#{item.fornec.nome}" />
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+
+</ui:composition>
+

@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dialog header="Fornecedor - Editar" widgetVar="dialogo-editar" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-editar">
+            <h:panelGrid  columns="2" columnClasses="label,value">
+                
+                <p:outputLabel value="Nome: " for="nome"/>
+                <p:inputText value="#{MBFornec.foe.fornec.nome}" id="nome" required="true" maxlength="80">
+                    <f:validateLength maximum="80" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+                
+                <p:outputLabel value="CNPJ: " for="cnpj"/>
+                <p:inputMask mask="99.999.999/9999-99" value="#{MBFornec.foe.fornec.cnpj}" id="cnpj" required="true">
+                    <f:validator validatorId="br.com.sysfarma.validator.CNPJValidator" />
+                    <f:converter converterId="cnpj" />
+                </p:inputMask>
+
+                <p:outputLabel value="Telefone: " for="tel"/>
+                <p:inputMask mask="(99) 9999-9999?9" value="#{MBFornec.foe.fornec.tel}" id="tel" required="true" converter="telefone"/>
+                
+                <p:outputLabel value="Ramal:  " for="ramal"/>
+                <p:inputText id="ramal" value="#{MBFornec.foe.fornec.ramal}" maxlength="9" >
+                    <f:convertNumber integerOnly="true"/>
+                    <f:validateLength maximum="9" />
+                </p:inputText>
+                
+                <p:outputLabel value="CEP: " for="cep"/>
+                <p:inputMask mask="99999-999" value="#{MBFornec.foe.endereco.cep}" id="cep" required="true" onblur="cepBuscaAutomaticoEditar();" styleClass="cep-edit" converter="cep"/>
+
+                <p:outputLabel value="Logradouro:  " for="logradouro"/>
+                <p:inputText value="#{MBFornec.foe.endereco.logradouro}" id="logradouro" required="true" maxlength="80" styleClass="logradouro-edit">
+                    <f:validateLength maximum="80" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Número:  " for="numero"/>
+                <p:inputText id="numero" value="#{MBFornec.foe.endereco.numero}" maxlength="9" required="true">
+                    <f:convertNumber integerOnly="true"/>
+                    <f:validateLength maximum="9" />
+                </p:inputText>
+
+                <p:outputLabel value="Complemento: " for="compl" />
+                <p:inputText id="compl" value="#{MBFornec.foe.endereco.compl}" styleClass="compl-edit">
+                    <f:validateLength maximum="45" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Cidade:  " for="cidade" />
+                <p:inputText value="#{MBFornec.foe.endereco.cidade.nome}" id="cidade" required="true" maxlength="45" styleClass="cidade-edit">
+                    <f:validateLength maximum="45" />
+                    <f:converter converterId="titulo" />
+                </p:inputText>
+
+                <p:outputLabel value="Estado: " for="estado" />
+                <p:selectOneMenu widgetVar="seleciona-estado-edit" filter="true" id="estado" value="#{MBFornec.foe.endereco.cidade.uf}" style="width: 150px;" styleClass="uf-edit" effect="fade">
+                    <f:selectItem itemLabel="São Paulo" itemValue="SP" />
+                    <f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+                    <f:selectItem itemLabel="Acre" itemValue="AC" />
+                    <f:selectItem itemLabel="Alagoas" itemValue="AL" />
+                    <f:selectItem itemLabel="Amapá" itemValue="AP" />
+                    <f:selectItem itemLabel="Amazonas" itemValue="AM" />
+                    <f:selectItem itemLabel="Bahia" itemValue="BA" />
+                    <f:selectItem itemLabel="Ceará" itemValue="CE" />
+                    <f:selectItem itemLabel="Distrito Federal" itemValue="DF" />
+                    <f:selectItem itemLabel="Espírito Santo" itemValue="ES" />
+                    <f:selectItem itemLabel="Goiás" itemValue="GO" />
+                    <f:selectItem itemLabel="Maranhão" itemValue="MA" />
+                    <f:selectItem itemLabel="Mato Grosso" itemValue="MT" />
+                    <f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS" />
+                    <f:selectItem itemLabel="Minas Gerais" itemValue="MG" />
+                    <f:selectItem itemLabel="Pará" itemValue="PA" />
+                    <f:selectItem itemLabel="Paraíba" itemValue="PB" />
+                    <f:selectItem itemLabel="Paraná" itemValue="PR" />
+                    <f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+                    <f:selectItem itemLabel="Piauí" itemValue="PI" />
+                    <f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+                    <f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS" />
+                    <f:selectItem itemLabel="Rondônia" itemValue="RO" />
+                    <f:selectItem itemLabel="Roraima" itemValue="RR" />
+                    <f:selectItem itemLabel="Santa Catarina" itemValue="SC" />
+                    <f:selectItem itemLabel="Sergipe" itemValue="SE" />
+                    <f:selectItem itemLabel="Tocantins" itemValue="TO" />
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+            
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Editar" icon="fa fa-edit" actionListener="#{MBFornec.novoEditar(true)}" update=":form-editar :growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-editar');" />
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

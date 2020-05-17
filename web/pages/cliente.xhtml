@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/modeloAdmin.xhtml">
+
+     <ui:define name="menu">
+        <ui:include src="/includes/modelo/menu.xhtml" />
+    </ui:define>
+    
+    <ui:define name="conteudo">
+        <ui:include src="/includes/cliente/tabela.xhtml" />
+    </ui:define> 
+
+    <ui:define name="dialogo">
+        <ui:include src="/includes/cliente/dialogo_novo.xhtml" />
+        <ui:include src="/includes/cliente/dialogo_editar.xhtml" />
+        <ui:include src="/includes/cliente/dialogo_ver.xhtml" />
+        <ui:include src="/includes/cliente/dialogo_excluir.xhtml" />
+    </ui:define> 
+
+</ui:composition>
+

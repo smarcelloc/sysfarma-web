@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dialog header="Medicamento - Editar" widgetVar="dialogo-editar" appendTo="@(body)" draggable="false" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+        <h:form id="form-editar">
+            <h:panelGrid  columns="2" columnClasses="label,value">
+
+               <p:outputLabel value="Preço R$: " for="total"/>
+                <p:inputNumber value="#{MBVenda.v.total}" id="total" required="true" maxValue="999999">
+                    <f:validateDoubleRange minimum="0.01" maximum="999999.00"/>
+                </p:inputNumber>
+
+                <p:outputLabel value="Vendida:  " for="dtvendida"/>
+                <p:inputMask mask="99/99/9999" value="#{MBVenda.v.dt_vendida}" id="dtvendida" required="true" converter="dateConverter" validator="br.com.sysfarma.validator.DataValidator" />
+                
+                <p:outputLabel value="Pagamento: " for="pgto"/>
+                <p:selectOneMenu value="#{MBVenda.v.pgto}" id="pgto" style="width: 150px;" effect="fade" required="true">
+                    <f:selectItem itemValue="Dinheiro" itemLabel="Dinheiro" />
+                    <f:selectItem itemValue="Credito" itemLabel="Crédito" />
+                    <f:selectItem itemValue="Debito" itemLabel="Débito" />
+                </p:selectOneMenu>
+                                
+                <p:outputLabel value="Cliente " for="select-cl" />
+                <p:selectOneMenu widgetVar="seleciona-cl" filter="true" id="select-cl" value="#{MBVenda.v.cliente.id}" style="width: 150px;" effect="fade" required="true">
+                    <f:selectItem itemValue="" itemLabel="Selecione ..." />
+                    <f:selectItems value="#{MBVenda.comboCE}" var="itemce" itemLabel="#{itemce.cliente.cpf} - #{itemce.cliente.nome}" itemValue="#{itemce.cliente.id}" />
+                </p:selectOneMenu>
+
+            </h:panelGrid>
+
+            <h:panelGrid cellspacing="10">
+                <p:commandButton value="Editar" icon="fa fa-edit" actionListener="#{MBVenda.novoEditar(true)}" update=":form-editar :growl :form-tabela" oncomplete="verificar(xhr, status, args, 'dialogo-editar');" />
+            </h:panelGrid>
+
+        </h:form>
+    </p:dialog>
+
+</ui:composition>
+

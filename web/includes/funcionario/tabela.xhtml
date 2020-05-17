@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <h:form id="form-tabela">
+        <p:dataTable var="item" value="#{MBFuncionario.itens}" filteredValue="#{MBFuncionario.itensFiltro}" sortBy="#{item.funcionario.id}" sortOrder="descending" resizableColumns="true" emptyMessage="Nenhum registro encontrado." paginator="true" rows="15" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+            <f:facet name="header">
+                <h:outputText value="Funcionários " />
+                
+                <p:commandButton title="Novo" icon="fa fa-plus" oncomplete="PF('dialogo-novo').show();" actionListener="#{MBFuncionario.prepararNovo()}" update=":form-novo">
+                    <p:resetInput target=":form-novo" />
+                </p:commandButton>
+                
+                <p:commandButton title="Atualizar" icon="fa fa-repeat" actionListener="#{MBFuncionario.init()}" update=":form-tabela" />
+            </f:facet>
+            
+            <p:column headerText="ID" sortBy="#{item.funcionario.id}" filterBy="#{item.funcionario.id}" width="60">
+                <h:outputText value="#{item.funcionario.id}" />
+            </p:column>
+            
+            <p:column headerText="Nome" sortBy="#{item.funcionario.nome}" filterBy="#{item.funcionario.nome}" width="200">
+                <h:outputText value="#{item.funcionario.nome}" />
+            </p:column>
+            
+            <p:column headerText="Telefone" filterBy="#{item.funcionario.tel}" width="130">
+                <h:outputLink value="tel:#{item.funcionario.tel}" title="Abrir app. Contato">
+                    <h:outputText value="#{item.funcionario.tel}" converter="telefone" />
+                </h:outputLink>
+            </p:column>
+            
+            <p:column headerText="E-mail" filterBy="#{item.funcionario.email}" width="250">
+                <h:outputLink value="mailto:#{item.funcionario.email}" title="Abrir app. E-mail">
+                    <h:outputText value="#{item.funcionario.email}" />
+                </h:outputLink>
+            </p:column>
+            
+            <p:column headerText="Admin" sortBy="#{item.funcionario.admin}" width="60">
+                <h:outputText value="#{item.funcionario.admin}" converter="boolean" />
+            </p:column>
+            
+            <p:column headerText="Opção" width="140">
+                <p:commandButton icon="fa fa-key" title="Novo senha" oncomplete="PF('dialogo-senha').show();" update=":form-senha">
+                    <f:setPropertyActionListener target="#{MBFuncionario.fe}" value="#{item}" />
+                    <p:resetInput target=":form-senha" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-eye" title="Ver" oncomplete="PF('dialogo-ver').show();" update=":form-ver">
+                    <f:setPropertyActionListener target="#{MBFuncionario.fe}" value="#{item}" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-edit" title="Editar" oncomplete="PF('dialogo-editar').show();" update=":form-editar">
+                    <f:setPropertyActionListener target="#{MBFuncionario.fe}" value="#{item}" />
+                    <p:resetInput target=":form-editar" />
+                </p:commandButton>
+                <p:commandButton icon="fa fa-trash-o" title="Excluir" oncomplete="PF('dialogo-excluir').show();" update=":form-excluir">
+                    <f:setPropertyActionListener target="#{MBFuncionario.fe}" value="#{item}" />
+                </p:commandButton>
+            </p:column>
+            
+        </p:dataTable>
+    </h:form>
+
+
+</ui:composition>
+
