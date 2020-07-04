@@ -40,11 +40,11 @@ public class LoginBean {
         try {
             Connection testeConexao = Conexao.getConexao();
         } catch (SQLException ex) {
-            UrlPagina.redirecionar("SysFarma/faces/pages/erro/db.xhtml");
+            UrlPagina.redirecionar("faces/pages/erro/db.xhtml");
         }
 
         if (Session.getParam("logado") != null) {
-            UrlPagina.redirecionar("venda.xhtml");
+            UrlPagina.redirecionar("faces/pages/venda.xhtml");
         }
 
     }
@@ -69,7 +69,7 @@ public class LoginBean {
     public void sair() {
         if (Session.getParam("logado") != null) {
             Session.remove("logado");
-            UrlPagina.redirecionar("login.xhtml");
+            UrlPagina.redirecionar("faces/pages/login.xhtml");
         }
 
     }
