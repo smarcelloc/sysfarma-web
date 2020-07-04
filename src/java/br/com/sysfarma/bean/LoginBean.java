@@ -69,7 +69,7 @@ public class LoginBean {
     public void sair() {
         if (Session.getParam("logado") != null) {
             Session.remove("logado");
-            UrlPagina.redirecionar("faces/pages/login.xhtml");
+            UrlPagina.redirecionar("login.xhtml");
         }
 
     }
